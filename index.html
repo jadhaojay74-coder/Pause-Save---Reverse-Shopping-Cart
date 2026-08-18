@@ -3,58 +3,110 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pause & Save - Reverse Shopping Cart</title>
+  <title>Pause & Save - Smart Impulse Control</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Pause & Save</h1>
-      <p>Trade work hours instead of impulsive spending.</p>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo-icon"><i class="fa-solid fa-piggy-bank"></i></div>
+        <div>
+          <h1>Pause & Save</h1>
+          <p>Overcome impulse buying with cooling-off timers</p>
+        </div>
+      </div>
+      <button class="btn-secondary" id="editWageBtn">
+        <i class="fa-solid fa-pen"></i> Wage: $<span id="wageDisplay">20.00</span>/hr
+      </button>
     </header>
 
-    <section class="stats-bar">
-      <div class="stat-card">
-        <span>Hourly Wage</span>
-        <div class="stat-value">$<span id="wageDisplay">15.00</span></div>
-        <button onclick="setWagePrompt()" class="btn-subtle">Edit Wage</button>
+    <!-- Stats Dashboard -->
+    <section class="stats-grid">
+      <div class="stat-card accent-green">
+        <div class="stat-icon"><i class="fa-solid fa-wallet"></i></div>
+        <div class="stat-info">
+          <span class="stat-label">Total Saved</span>
+          <span class="stat-value">$<span id="totalSavedDisplay">0.00</span></span>
+        </div>
       </div>
-      <div class="stat-card highlight">
-        <span>Total Money Saved</span>
-        <div class="stat-value">$<span id="totalSavedDisplay">0.00</span></div>
+
+      <div class="stat-card accent-blue">
+        <div class="stat-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+        <div class="stat-info">
+          <span class="stat-label">Active Cooldowns</span>
+          <span class="stat-value" id="activeCountDisplay">0</span>
+        </div>
+      </div>
+
+      <div class="stat-card accent-purple">
+        <div class="stat-icon"><i class="fa-solid fa-fire"></i></div>
+        <div class="stat-info">
+          <span class="stat-label">Saved Items Streak</span>
+          <span class="stat-value" id="streakDisplay">0</span>
+        </div>
       </div>
     </section>
 
-    <section class="card">
-      <h2>Add Impulse Item</h2>
-      <form id="itemForm">
-        <div class="form-group">
-          <label for="itemName">Item Name</label>
-          <input type="text" id="itemName" placeholder="e.g. Wireless Headphones" required />
-        </div>
-        <div class="form-row">
+    <!-- Main Content Area -->
+    <main class="main-layout">
+      <!-- Left Column: Add Form -->
+      <section class="card form-card">
+        <h2><i class="fa-solid fa-plus-circle"></i> Add New Impulse Item</h2>
+        <form id="itemForm">
           <div class="form-group">
-            <label for="itemPrice">Price ($)</label>
-            <input type="number" id="itemPrice" min="1" step="0.01" placeholder="120" required />
+            <label for="itemName">Item Name</label>
+            <input type="text" id="itemName" placeholder="e.g. Mechanical Keyboard" required />
           </div>
-          <div class="form-group">
-            <label for="itemDays">Cooling Period</label>
-            <select id="itemDays">
-              <option value="7">7 Days</option>
-              <option value="14" selected>14 Days</option>
-              <option value="30">30 Days</option>
-            </select>
-          </div>
-        </div>
-        <button type="submit" class="btn-primary">Lock Item in Cooldown</button>
-      </form>
-    </section>
 
-    <section>
-      <h2>Cooling-Off List</h2>
-      <div id="itemsContainer" class="items-grid"></div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="itemPrice">Price ($)</label>
+              <input type="number" id="itemPrice" min="1" step="0.01" placeholder="150" required />
+            </div>
+            <div class="form-group">
+              <label for="itemDays">Cooldown</label>
+              <select id="itemDays">
+                <option value="1">1 Day (Test)</option>
+                <option value="7" selected>7 Days</option>
+                <option value="14">14 Days</option>
+                <option value="30">30 Days</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="work-preview" id="workPreview">
+            <i class="fa-solid fa-briefcase"></i> Costs roughly <strong>0 hours</strong> of work
+          </div>
+
+          <button type="submit" class="btn-primary">
+            <i class="fa-solid fa-lock"></i> Start Cooling Timer
+          </button>
+        </form>
+      </section>
+
+      <!-- Right Column: Active Items -->
+      <section class="card feed-card">
+        <div class="section-header">
+          <h2><i class="fa-solid fa-clock"></i> Active Cooling List</h2>
+          <span class="badge" id="listBadge">0 Items</span>
+        </div>
+        <div id="itemsContainer" class="items-list"></div>
+      </section>
+    </main>
+
+    <!-- History / Saved Log -->
+    <section class="card history-card">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-circle-check"></i> Money Saved History</h2>
+        <button class="btn-subtle" id="clearHistoryBtn"><i class="fa-solid fa-trash"></i> Clear History</button>
+      </div>
+      <div id="historyContainer" class="history-list"></div>
     </section>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
